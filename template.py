@@ -19,6 +19,7 @@ list_of_files=[
     'params.yaml',
     'main.py',
     'app.py',
+    'setup.py',
     'Dokerfile',
     'requrements.txt',
     'test.py'
