@@ -1,6 +1,7 @@
 from textsummarzer.constants import *
 from textsummarzer.utils.common import read_yaml,create_directory
 from textsummarzer.entity import DataIngestionconfig
+from textsummarzer.entity import DataValidationConfig
 class ConfigurationManager:
     def __init__(
         self,
@@ -21,3 +22,14 @@ class ConfigurationManager:
       unzip_dir=config.unzip_dir  #Path(config.unzip_dir)
       )
       return data_ingestion_config
+    def get_data_validation_config(self)->DataValidationConfig:
+      
+      config=self.config.data_validation
+      create_directory([config.root_dir])
+      
+      data_validation_config=DataValidationConfig(
+      root_dir=config.root_dir ,
+      status_file=config.status_file,
+      required_file=config.required_file,  )
+      
+      return data_validation_config
