@@ -1,0 +1,7 @@
+artifacts_root: artifacts
+
+data_ingestion:
+  root_dir: artifacts/data_ingestion
+  source_urls:  https://github.com/entbappy/Branching-tutorial/raw/master/summarizer-data.zip
+  local_data_files: artifacts/data_ingestion/data.zip # for dowinloading the data files
+  unzip_dir: artifacts/data_ingestion
