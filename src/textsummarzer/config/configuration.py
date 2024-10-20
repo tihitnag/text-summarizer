@@ -3,6 +3,8 @@ from textsummarzer.utils.common import read_yaml,create_directory
 from textsummarzer.entity import DataIngestionconfig
 from textsummarzer.entity import DataValidationConfig
 from textsummarzer.entity import DataTransforamtionConfig
+from textsummarzer.entity import ModelTrainConfig
+from textsummarzer.entity import ModelEvaluationConfig
 class ConfigurationManager:
     def __init__(
         self,
@@ -47,3 +49,39 @@ class ConfigurationManager:
       )
       
       return data_transformation_config
+ 
+       
+    def get_data_trainer_config(self)->ModelTrainConfig:
+      
+      config=self.config.model_trainer
+      params=self.params.TrainingArguments
+      create_directory([config.root_dir])
+      
+      data_trainer_config=ModelTrainConfig (
+        root_dir=config.root_dir ,
+        data_path=config.data_path,
+        model_ckpt=config.model_ckpt,
+        num_train_epochs=params.num_train_epochs,
+        warmup_steps  = params. warmup_steps ,
+        per_device_train_batch_size  = params.per_device_train_batch_size  ,
+        weight_decay=params.weight_decay,
+        logging_steps=params.logging_steps,
+        evaluation_strategy= params.evaluation_strategy,
+        eval_steps= params.eval_steps,
+        save_steps=params.save_steps,
+        gradient_accumulation_steps= params.gradient_accumulation_steps)
+      
+      return data_trainer_config
+  #... Other methods for accessing different configuration sections.
+  
+    def get_model_evaluation_config(self) -> ModelEvaluationConfig:
+        config=self.config.model_evaluation
+        create_directory([config.root_dir])
+        model_evaluation_config= ModelEvaluationConfig(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            model_path=config.model_path,
+            tokenizer_path=config.tokenizer_path,
+            metric_file_name=config.metric_file_name,
+        )
+        return model_evaluation_config
